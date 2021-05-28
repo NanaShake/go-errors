@@ -36,14 +36,14 @@ func New(id string, code int, format string, args ...interface{}) error {
 	}
 }
 
-func Wrap(id string, code int, err error) error {
+func Wrap(id string, err error) error {
 	if ra, ok := err.(*Error); ok {
 		ra.Id = id
 		return err
 	}
 	return &Error{
 		Id:     id,
-		Code:   code,
+		Code:   0,
 		Detail: err.Error(),
 	}
 }
