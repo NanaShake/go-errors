@@ -1,4 +1,4 @@
-package strerrors
+package errors
 
 import (
 	"encoding/json"
@@ -7,15 +7,17 @@ import (
 )
 
 type Error struct {
-	Id     string `json:"id"`
-	Code   int    `json:"code"`
-	Detail string `json:"detail"`
+	Id     string `json:"id"`     // 错误标识
+	Code   int    `json:"code"`   // 错误标识(数字型)
+	Detail string `json:"detail"` // 错误描述
 }
 
+// 返回错误描述
 func (e *Error) Error() string {
 	return e.Detail
 }
 
+// 返回json格式字符串
 func Errorf(code int, format string, args ...interface{}) string {
 	err := &Error{
 		Id:     strconv.Itoa(code),
