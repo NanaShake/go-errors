@@ -14,7 +14,8 @@ type Error struct {
 
 // 返回错误描述
 func (e *Error) Error() string {
-	return e.Detail
+	txt, _ := json.Marshal(e)
+	return string(txt)
 }
 
 // 返回json格式字符串
@@ -24,15 +25,26 @@ func Errorf(code int, format string, args ...interface{}) string {
 		Code:   code,
 		Detail: fmt.Sprintf(format, args),
 	}
-	msg, _ := json.Marshal(err)
-	return string(msg)
+	return err.Error()
 }
 
-func New(text string, code int, format string, args ...interface{}) error {
+func New(id string, code int, format string, args ...interface{}) error {
 	return &Error{
-		Id:     text,
+		Id:     id,
 		Code:   code,
 		Detail: fmt.Sprintf(format, args),
+	}
+}
+
+func Wrap(id string, code int, err error) error {
+	if ra, ok := err.(*Error); ok {
+		ra.Id = id
+		return err
+	}
+	return &Error{
+		Id:     id,
+		Code:   code,
+		Detail: err.Error(),
 	}
 }
 
