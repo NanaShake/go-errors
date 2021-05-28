@@ -1,3 +1,3 @@
-module github.com/NanaShake/golang-errors
+module github.com/NanaShake/go-errors
 
 go 1.15
