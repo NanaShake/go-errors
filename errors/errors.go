@@ -37,11 +37,12 @@ func New(id string, code int, msg string) error {
 
 func Wrap(id string, err error) error {
 	if _, ok := err.(*Error); ok {
-		//ra.Id = id
+		ra.Id = id
 		return err
 	}
-
-	return ParseError(err.Error())
+	myErr := ParseError(err.Error())
+	myErr.Id = id
+	return myErr
 }
 
 func ParseError(msg string) *Error {
@@ -52,12 +53,24 @@ func ParseError(msg string) *Error {
 	} else {
 		if id, ok := tags["id"]; ok {
 			o.Id = id.(string)
+		} else {
+			if id, ok := tags["Id"]; ok {
+				o.Id = id.(string)
+			}
 		}
 		if detail, ok := tags["detail"]; ok {
 			o.Detail = detail.(string)
+		} else {
+			if id, ok := tags["Detail"]; ok {
+				o.Id = id.(string)
+			}
 		}
 		if code, ok := tags["code"]; ok {
 			o.Code = code.(int)
+		} else {
+			if code, ok := tags["Code"]; ok {
+				o.Code = code.(int)
+			}
 		}
 	}
 	return &o
