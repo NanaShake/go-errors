@@ -40,17 +40,14 @@ func Wrap(id string, err error) error {
 		//ra.Id = id
 		return err
 	}
-	return &Error{
-		Id:     id,
-		Code:   0,
-		Detail: err.Error(),
-	}
+
+	return ParseError(err.Error())
 }
 
 func ParseError(msg string) *Error {
-	o := Error{Detail: msg}
+	o := Error{}
 	tags := map[string]interface{}{}
-	if err := json.Unmarshal([]byte(msg), &tags); nil == err {
+	if err := json.Unmarshal([]byte(msg), &tags); nil != err {
 		o.Detail = msg
 	} else {
 		if id, ok := tags["id"]; ok {
