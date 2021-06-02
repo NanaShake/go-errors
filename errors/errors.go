@@ -36,7 +36,7 @@ func New(id string, code int, msg string) error {
 }
 
 func Wrap(id string, err error) error {
-	if _, ok := err.(*Error); ok {
+	if ra, ok := err.(*Error); ok {
 		ra.Id = id
 		return err
 	}
