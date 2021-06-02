@@ -66,10 +66,10 @@ func ParseError(msg string) *Error {
 			}
 		}
 		if code, ok := tags["code"]; ok {
-			o.Code = code.(int)
+			o.Code = code.(float64)
 		} else {
 			if code, ok := tags["Code"]; ok {
-				o.Code = code.(int)
+				o.Code = code.(float64)
 			}
 		}
 	}
