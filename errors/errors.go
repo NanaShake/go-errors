@@ -62,14 +62,14 @@ func ParseError(msg string) *Error {
 			o.Detail = detail.(string)
 		} else {
 			if id, ok := tags["Detail"]; ok {
-				o.Id = id.(string)
+				o.Detail = id.(string)
 			}
 		}
 		if code, ok := tags["code"]; ok {
-			o.Code = code.(float64)
+			o.Code = int(code.(float64))
 		} else {
 			if code, ok := tags["Code"]; ok {
-				o.Code = code.(float64)
+				o.Code = int(code.(float64))
 			}
 		}
 	}
