@@ -2,7 +2,6 @@ package errors
 
 import (
 	"encoding/json"
-	"fmt"
 	"strconv"
 )
 
@@ -19,20 +18,20 @@ func (e *Error) Error() string {
 }
 
 // 返回json格式字符串
-func Errorf(code int, format string, args ...interface{}) string {
+func Errorf(code int, msg string) string {
 	err := &Error{
 		Id:     strconv.Itoa(code),
 		Code:   code,
-		Detail: fmt.Sprintf(format, args),
+		Detail: msg,
 	}
 	return err.Error()
 }
 
-func New(id string, code int, format string, args ...interface{}) error {
+func New(id string, code int, msg string) error {
 	return &Error{
 		Id:     id,
 		Code:   code,
-		Detail: fmt.Sprintf(format, args),
+		Detail: msg,
 	}
 }
 
